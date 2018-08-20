@@ -1,0 +1,9 @@
+<h1>{{question.question_text}}</h1>
+
+<ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{choice.choice_text}} -- {{choice.vote}} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+<!--这里要注意一下，使用了通用视图以后还可以这样用吗？-->
+<a href="{% url 'polls.detail' question.id %}">Vote again？</a>

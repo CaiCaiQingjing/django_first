@@ -1,0 +1,34 @@
+<!--
+    模板系统统一使用点符号来访问变量的属性
+-->
+
+<h1>{{ question.question_text }}</h1>      <!--首先：Django尝试对question对象使用字典查找，如果失败了就尝试属性查找，如果失败了就尝试列表查找-->
+
+<!--如果有error_message传入，就循环打印出来-->
+{% if error_message %}
+    <p><strong>{{error_message}}</strong></p>
+{% endif %}
+
+<!--表单定义部分，点击了就会执行/polls/vote/函数-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}  <!--内部url的post表单都应该使用{% csrf_token %}-->
+    {% for choice in question.choice_set.all %}   <!--为每一个choice对象前面都给一个radio button-->
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id}}" />
+        <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label>      <!--forloop.counter指示循环多次-->
+        <br/>
+    {% endfor %}
+    <input type="submit" value="Vote"/>
+</form>
+
+
+
+<!-- 
+<ul>
+    <!--这一步是不是查找对应的所有外键的所有tuples，然后打印出来-->
+    <!--但不是很清楚这个函数是哪里来的，我并没有对其进行定义-->
+    {% for choice in question.choice_set.all %}     <!--question.choice_set.all(),返回一个可迭代的choice对象-->
+        <li>{{ choice.choice_text }}</li>
+    {% endfor %}
+</ul> 
+-->
+

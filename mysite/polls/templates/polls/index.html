@@ -1,0 +1,21 @@
+<!--ex: polls/templates/polls/index.html
+# Django会寻找到对应的app_directories，我们只需要写polls/index.html即可对其进行引用
+
+# Django已经会在各自INSTALLED_APP目录下寻找templates，但是我们仍要使用所谓的模板命名空间，因为当我们引用的时候，简写的写法是没有区别的
+# Django可并不能区分，所以还需要用命名空间帮助我们在引用的时候进行区分
+-->
+
+{% if latest_question_list %}
+    <ul>
+        {% for question in latest_question_list %}
+        <!--硬编码和强耦合的链接我们是不想要的-->
+        <!--这个标签的工作方式是在polls.urls模块的url定义中寻找指定名字的条目-->
+            <!--<li><a href="{% url 'detail' question.id %}">{{question.question_text}}</a></li>-->
+            <!-- <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li> -->
+            <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Mo polls are available.</p>
+{% endif %}
+
