@@ -1,2 +1,2 @@
 # django_first
-learn the quick_start of django 
+ddlearn the quick_start of django 
